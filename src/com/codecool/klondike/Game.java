@@ -200,19 +200,25 @@ public class Game extends Pane {
 
     public void dealCards() {
         Iterator<Card> deckIterator = deck.iterator();
-        //TODO
-        Collections.shuffle(deck);
+        // done
 
-        for (int i = 0; i < 7 ; i++) {
-            // deck.get(i).moveToPile(tableauPiles.get(i));
-            System.out.println(deck.get(i));
-        }
+        Collections.shuffle(deck);
 
         deckIterator.forEachRemaining(card -> {
             stockPile.addCard(card);
             addMouseEventHandlers(card);
             getChildren().add(card);
         });
+
+        for (int i = 0; i < 7; i++) {
+            for (int j = 0; j <= i; j++) {
+                stockPile.getTopCard().moveToPile(tableauPiles.get(i));
+            }
+        }
+
+        for (int i = 0; i < 7; i++) {
+            tableauPiles.get(i).getTopCard().flip();
+        }
 
     }
 
