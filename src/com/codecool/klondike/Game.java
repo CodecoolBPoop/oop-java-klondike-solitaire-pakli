@@ -94,14 +94,14 @@ public class Game extends Pane {
 
 
     public boolean isGameWon() {
-        //TODO
-       // if (stockPile.isEmpty()) && (discardPile.isEmpty()) && !(foundationPiles.isEmpty()) {
-       //     return true;
-       // }
-      //  else{
-      //      return false;
-        //}
-        return false;
+        // done?..
+
+        for (int i = 0; i < 0; i++) {
+            if (foundationPiles.get(i).numOfCards() != 13) {
+                return false;
+            }
+        }
+        return true;
     }
 
 
