@@ -200,8 +200,14 @@ public class Game extends Pane {
 
     public void dealCards() {
         Iterator<Card> deckIterator = deck.iterator();
-        //TODO - done
+        //TODO
         Collections.shuffle(deck);
+
+        for (int i = 0; i < 7 ; i++) {
+            // deck.get(i).moveToPile(tableauPiles.get(i));
+            System.out.println(deck.get(i));
+        }
+
         deckIterator.forEachRemaining(card -> {
             stockPile.addCard(card);
             addMouseEventHandlers(card);
