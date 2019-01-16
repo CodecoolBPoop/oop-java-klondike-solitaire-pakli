@@ -95,8 +95,13 @@ public class Game extends Pane {
 
     public Game() {
         deck = Card.createNewDeck();
+        // Collections.shuffle(deck);
         initPiles();
         dealCards();
+
+
+        // System.out.println(stockPile.getCards());
+        // System.out.println(Card.isOppositeColor(stockPile.getCards().get(1), stockPile.getCards().get(30)));
     }
 
     public void addMouseEventHandlers(Card card) {
@@ -108,7 +113,19 @@ public class Game extends Pane {
 
     public void refillStockFromDiscard() {
         //TODO
-        System.out.println("Stock refilled from discard pile.");
+        //kedd este
+        if (stockPile.isEmpty()) {
+            for (Card card : discardPile.getCards()) {
+                card.flip();
+                stockPile.addCard(card);
+            }
+            discardPile = null;
+            discardPile = new Pile(Pile.PileType.DISCARD, "Discard", STOCK_GAP);
+            discardPile.setBlurredBackground();
+            discardPile.setLayoutX(285);
+            discardPile.setLayoutY(20);
+
+        }
     }
 
     public boolean isMoveValid(Card card, Pile destPile) {
