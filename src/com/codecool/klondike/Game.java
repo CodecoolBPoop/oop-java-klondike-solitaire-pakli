@@ -256,31 +256,30 @@ public class Game extends Pane {
 
     private void restartGame() {
 
-//        for (Card card : stockPile.getCards()) {
-//            getChildren().remove(card);
-//
-//        }
-//
-//        for (Card card : discardPile.getCards()) {
-//            getChildren().remove(card);
-//        }
-//
-//        for (int i = 0; i < tableauPiles.size(); i++) {
-//            for (Card card : tableauPiles.get(i).getCards()) {
-//                getChildren().remove(card);
-//            }
-//        }
-//
-//        for (int i = 0; i < foundationPiles.size(); i++) {
-//            for (Card card : foundationPiles.get(i).getCards()) {
-//                getChildren().remove(card);
-//            }
-//        }
+        for (Card card : stockPile.getCards()) {
+            getChildren().remove(card);
+
+        }
+
+        for (Card card : discardPile.getCards()) {
+            getChildren().remove(card);
+        }
+
+        for (int i = 0; i < tableauPiles.size(); i++) {
+            for (Card card : tableauPiles.get(i).getCards()) {
+                getChildren().remove(card);
+            }
+        }
+
+        for (int i = 0; i < foundationPiles.size(); i++) {
+            for (Card card : foundationPiles.get(i).getCards()) {
+                getChildren().remove(card);
+            }
+        }
 //        stockPile = new Pile(Pile.PileType.DISCARD, "Discard", STOCK_GAP);
 //        stockPile.setBlurredBackground();
 //        stockPile.setLayoutX(95);
 //        stockPile.setLayoutY(20);
-//        initPiles();
 
         stockPile.clear();
         discardPile.clear();
