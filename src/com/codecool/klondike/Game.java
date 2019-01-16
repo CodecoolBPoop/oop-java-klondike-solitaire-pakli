@@ -45,14 +45,17 @@ public class Game extends Pane {
         }
     };
 
+
     private EventHandler<MouseEvent> stockReverseCardsHandler = e -> {
         refillStockFromDiscard();
     };
+
 
     private EventHandler<MouseEvent> onMousePressedHandler = e -> {
         dragStartX = e.getSceneX();
         dragStartY = e.getSceneY();
     };
+
 
     private EventHandler<MouseEvent> onMouseDraggedHandler = e -> {
         Card card = (Card) e.getSource();
@@ -74,6 +77,7 @@ public class Game extends Pane {
         card.setTranslateY(offsetY);
     };
 
+
     private EventHandler<MouseEvent> onMouseReleasedHandler = e -> {
         if (draggedCards.isEmpty())
             return;
@@ -88,10 +92,18 @@ public class Game extends Pane {
         }
     };
 
+
     public boolean isGameWon() {
         //TODO
+       // if (stockPile.isEmpty()) && (discardPile.isEmpty()) && !(foundationPiles.isEmpty()) {
+       //     return true;
+       // }
+      //  else{
+      //      return false;
+        //}
         return false;
     }
+
 
     public Game() {
         deck = Card.createNewDeck();
@@ -128,10 +140,13 @@ public class Game extends Pane {
         }
     }
 
+
     public boolean isMoveValid(Card card, Pile destPile) {
         //TODO
         return true;
     }
+
+
     private Pile getValidIntersectingPile(Card card, List<Pile> piles) {
         Pile result = null;
         for (Pile pile : piles) {
@@ -143,12 +158,14 @@ public class Game extends Pane {
         return result;
     }
 
+
     private boolean isOverPile(Card card, Pile pile) {
         if (pile.isEmpty())
             return card.getBoundsInParent().intersects(pile.getBoundsInParent());
         else
             return card.getBoundsInParent().intersects(pile.getTopCard().getBoundsInParent());
     }
+
 
     private void handleValidMove(Card card, Pile destPile) {
         String msg = null;
@@ -200,7 +217,6 @@ public class Game extends Pane {
 
     public void dealCards() {
         Iterator<Card> deckIterator = deck.iterator();
-        // done
 
         Collections.shuffle(deck);
 
@@ -219,8 +235,8 @@ public class Game extends Pane {
         for (int i = 0; i < 7; i++) {
             tableauPiles.get(i).getTopCard().flip();
         }
-
     }
+
 
     public void setTableBackground(Image tableBackground) {
         setBackground(new Background(new BackgroundImage(tableBackground,
