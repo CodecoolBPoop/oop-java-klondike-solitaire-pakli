@@ -84,7 +84,7 @@ public class Game extends Pane {
             handleValidMove(card, pile);
         } else {
             draggedCards.forEach(MouseUtil::slideBack);
-            draggedCards = null;
+            draggedCards.clear();  //not null!!
         }
     };
 
@@ -119,7 +119,7 @@ public class Game extends Pane {
                 card.flip();
                 stockPile.addCard(card);
             }
-            discardPile = null;
+            // discardPile = null;
             discardPile = new Pile(Pile.PileType.DISCARD, "Discard", STOCK_GAP);
             discardPile.setBlurredBackground();
             discardPile.setLayoutX(285);
