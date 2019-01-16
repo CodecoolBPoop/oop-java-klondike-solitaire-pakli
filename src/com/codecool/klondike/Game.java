@@ -43,6 +43,10 @@ public class Game extends Pane {
             card.setMouseTransparent(false);
             System.out.println("Placed " + card + " to the waste.");
         }
+        else if(card.getContainingPile().getPileType() == Pile.PileType.TABLEAU && card.isFaceDown()){
+
+            card.flip();
+        }
     };
 
 
@@ -124,7 +128,6 @@ public class Game extends Pane {
     }
 
     public void refillStockFromDiscard() {
-        //TODO
         //kedd este
         if (stockPile.isEmpty()) {
             for (Card card : discardPile.getCards()) {
@@ -143,6 +146,16 @@ public class Game extends Pane {
 
     public boolean isMoveValid(Card card, Pile destPile) {
         //TODO
+        if (destPile.getPileType() == Pile.PileType.FOUNDATION) {
+            if (destPile.isEmpty() && (card.getRank() == 1)){
+                return true;
+                }
+        }
+
+        else {
+            System.out.println(destPile.getPileType());
+            return true;
+        }
         return true;
     }
 
