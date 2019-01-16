@@ -146,16 +146,17 @@ public class Game extends Pane {
 
     public boolean isMoveValid(Card card, Pile destPile) {
         //TODO
-        if (destPile.getPileType() == Pile.PileType.FOUNDATION) {
-            if (destPile.isEmpty() && (card.getRank() == 1)){
+        if (destPile.getPileType().equals(Pile.PileType.TABLEAU)) {
+            if (destPile.isEmpty() && (card.getRank() == 13)) {
                 return true;
-                }
-        }
-
-        else {
-            System.out.println(destPile.getPileType());
-            return true;
-        }
+            } else if (destPile.isEmpty()) {
+                return false;
+            } else if (destPile.getTopCard().isOppositeColor(card, destPile.getTopCard()))
+                return true;
+            } else {
+                return false;
+            }
+        System.out.println(destPile.getPileType());
         return true;
     }
 
