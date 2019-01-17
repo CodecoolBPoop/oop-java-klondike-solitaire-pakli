@@ -78,7 +78,6 @@ public class Card extends ImageView {
     }
 
     public static boolean isOppositeColor(Card card1, Card card2) {
-        //kedd este
         if (((card1.getSuit() == 1 || card1.getSuit() == 2) && (card2.getSuit() == 3 || card2.getSuit() == 4)) ||
                 ((card1.getSuit() == 3 || card1.getSuit() == 4) && (card2.getSuit() == 1 || card2.getSuit() == 2))){
             return true;
