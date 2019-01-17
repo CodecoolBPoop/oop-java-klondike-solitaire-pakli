@@ -4,6 +4,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ListChangeListener;
 import javafx.event.EventHandler;
 import javafx.scene.control.Alert;
+import javafx.scene.control.Button;
 import javafx.scene.image.Image;
 import javafx.scene.input.MouseEvent;
 import javafx.scene.layout.Background;
@@ -34,6 +35,8 @@ public class Game extends Pane {
     private static double STOCK_GAP = 1;
     private static double FOUNDATION_GAP = 0;
     private static double TABLEAU_GAP = 30;
+
+    Button restartBtn = new Button("Restart");
 
 
     private EventHandler<MouseEvent> onMouseClickedHandler = e -> {
@@ -101,14 +104,14 @@ public class Game extends Pane {
 // ITT KELL JAVÍTANI <-- !!!!!!
 
     public boolean isGameWon() {
-        //TODO
-       // if (stockPile.isEmpty()) && (discardPile.isEmpty()) && !(foundationPiles.isEmpty()) {
-       //     return true;
-       // }
-      //  else{
-      //      return false;
-        //}
-        return false;
+        // done?..
+
+        for (int i = 0; i < 0; i++) {
+            if (foundationPiles.get(i).numOfCards() != 13) {
+                return false;
+            }
+        }
+        return true;
     }
 
 
@@ -118,6 +121,8 @@ public class Game extends Pane {
         initPiles();
         dealCards();
 
+        getChildren().add(restartBtn);
+        addButtonsEventHandlers();
 
         // System.out.println(stockPile.getCards());
         // System.out.println(Card.isOppositeColor(stockPile.getCards().get(1), stockPile.getCards().get(30)));
@@ -128,6 +133,10 @@ public class Game extends Pane {
         card.setOnMouseDragged(onMouseDraggedHandler);
         card.setOnMouseReleased(onMouseReleasedHandler);
         card.setOnMouseClicked(onMouseClickedHandler);
+    }
+
+    public void addButtonsEventHandlers() {
+        restartBtn.setOnAction((event -> restartGame()));
     }
 
     public void refillStockFromDiscard() {
@@ -264,6 +273,48 @@ public class Game extends Pane {
         setBackground(new Background(new BackgroundImage(tableBackground,
                 BackgroundRepeat.REPEAT, BackgroundRepeat.REPEAT,
                 BackgroundPosition.CENTER, BackgroundSize.DEFAULT)));
+    }
+
+
+    private void restartGame() {
+
+        for (Card card : stockPile.getCards()) {
+            getChildren().remove(card);
+
+        }
+
+        for (Card card : discardPile.getCards()) {
+            getChildren().remove(card);
+        }
+
+        for (int i = 0; i < tableauPiles.size(); i++) {
+            for (Card card : tableauPiles.get(i).getCards()) {
+                getChildren().remove(card);
+            }
+        }
+
+        for (int i = 0; i < foundationPiles.size(); i++) {
+            for (Card card : foundationPiles.get(i).getCards()) {
+                getChildren().remove(card);
+            }
+        }
+//        stockPile = new Pile(Pile.PileType.DISCARD, "Discard", STOCK_GAP);
+//        stockPile.setBlurredBackground();
+//        stockPile.setLayoutX(95);
+//        stockPile.setLayoutY(20);
+
+        stockPile.clear();
+        discardPile.clear();
+        for (int i = 0; i < 7; i++) {
+            tableauPiles.get(i).clear();
+        }
+        for (int i = 0; i < 4; i++) {
+            foundationPiles.get(i).clear();
+        }
+
+
+        deck = Card.createNewDeck();
+        dealCards();
     }
 
 }
