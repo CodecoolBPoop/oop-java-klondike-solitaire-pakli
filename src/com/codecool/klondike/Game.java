@@ -92,16 +92,18 @@ public class Game extends Pane {
         Card card = (Card) e.getSource();
         ValidPiles.add(foundationPiles);
         ValidPiles.add(tableauPiles);
-        Pile pile = getValidIntersectingPile(card, ValidPiles); // <-----!!!!!!!!!!!!!!!
+        Pile pile = getValidIntersectingPile(card, ValidPiles);
         if (pile != null) {
             handleValidMove(card, pile);
-        } else {
+        }
+        else {
+            MouseUtil.slideToDest(draggedCards, card.getContainingPile());
             draggedCards.forEach(MouseUtil::slideBack);
             draggedCards.clear();  //not null!!
         }
+        ValidPiles.clear();
         };
 
-// ITT KELL JAVÍTANI <-- !!!!!!
 
     public boolean isGameWon() {
         // done?..
@@ -162,17 +164,28 @@ public class Game extends Pane {
             if (destPile.isEmpty() && (card.getRank() == 13)) {
                 return true;
             } else if (destPile.isEmpty()) {
+
                 return false;
-            } else if (destPile.getTopCard().isOppositeColor(card, destPile.getTopCard()))
+            } else if (destPile.getTopCard().isOppositeColor(card, destPile.getTopCard())) {
                 return true;
             } else {
                 return true;
             }
-
-        if (destPile.getPileType().equals(Pile.PileType.FOUNDATION)) {
-            return true;
         }
-        return true;
+
+        else if (destPile.getPileType().equals(Pile.PileType.FOUNDATION)) {
+            if (destPile.isEmpty() && (card.getRank() == 1)) {
+                return true;
+            }
+            if (Card.isSameSuit(card, destPile.getTopCard()) &&
+                    (card.getRank()-1) == destPile.getTopCard().getRank()) {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }
+        return false;
     }
 
 
