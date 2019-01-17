@@ -47,7 +47,9 @@ public class Game extends Pane {
             card.setMouseTransparent(false);
             System.out.println("Placed " + card + " to the waste.");
         }
-        else if(card.getContainingPile().getPileType() == Pile.PileType.TABLEAU && card.isFaceDown()){
+        else if((card.getContainingPile().getPileType() == Pile.PileType.TABLEAU)
+                && (card == card.getContainingPile().getTopCard())
+                && (card.isFaceDown())){
 
             card.flip();
         }
@@ -70,6 +72,9 @@ public class Game extends Pane {
         Pile activePile = card.getContainingPile();
         if (activePile.getPileType() == Pile.PileType.STOCK)
             return;
+        if (card != activePile.getTopCard()) {
+            return;
+        }
         double offsetX = e.getSceneX() - dragStartX;
         double offsetY = e.getSceneY() - dragStartY;
 
@@ -99,14 +104,16 @@ public class Game extends Pane {
         else {
             MouseUtil.slideToDest(draggedCards, card.getContainingPile());
             draggedCards.forEach(MouseUtil::slideBack);
-            draggedCards.clear();  //not null!!
+            draggedCards.clear();
         }
         ValidPiles.clear();
+        if (isGameWon()){
+            System.out.println("You WON");
+        }
         };
 
 
     public boolean isGameWon() {
-        // done?..
 
         for (int i = 0; i < 0; i++) {
             if (foundationPiles.get(i).numOfCards() != 13) {
@@ -119,15 +126,12 @@ public class Game extends Pane {
 
     public Game() {
         deck = Card.createNewDeck();
-        // Collections.shuffle(deck);
+
         initPiles();
         dealCards();
 
         getChildren().add(restartBtn);
         addButtonsEventHandlers();
-
-        // System.out.println(stockPile.getCards());
-        // System.out.println(Card.isOppositeColor(stockPile.getCards().get(1), stockPile.getCards().get(30)));
     }
 
     public void addMouseEventHandlers(Card card) {
@@ -142,13 +146,11 @@ public class Game extends Pane {
     }
 
     public void refillStockFromDiscard() {
-        //kedd este
         if (stockPile.isEmpty()) {
             for (Card card : discardPile.getCards()) {
                 card.flip();
                 stockPile.addCard(card);
             }
-            // discardPile = null;
             discardPile = new Pile(Pile.PileType.DISCARD, "Discard", STOCK_GAP);
             discardPile.setBlurredBackground();
             discardPile.setLayoutX(285);
@@ -163,21 +165,21 @@ public class Game extends Pane {
         if (destPile.getPileType().equals(Pile.PileType.TABLEAU)) {
             if (destPile.isEmpty() && (card.getRank() == 13)) {
                 return true;
-            } else if (destPile.isEmpty()) {
-
+            }
+            else {
+                if (Card.isOppositeColor(card, destPile.getTopCard()) && (card.getRank() == destPile.getTopCard().getRank() - 1)) {
+                    return true;
+                }
                 return false;
-            } else if (destPile.getTopCard().isOppositeColor(card, destPile.getTopCard())) {
-                return true;
-            } else {
-                return true;
             }
         }
 
         else if (destPile.getPileType().equals(Pile.PileType.FOUNDATION)) {
+
             if (destPile.isEmpty() && (card.getRank() == 1)) {
                 return true;
             }
-            if (Card.isSameSuit(card, destPile.getTopCard()) &&
+            else if (Card.isSameSuit(card, destPile.getTopCard()) &&
                     (card.getRank()-1) == destPile.getTopCard().getRank()) {
                 return true;
             }
@@ -293,7 +295,6 @@ public class Game extends Pane {
 
         for (Card card : stockPile.getCards()) {
             getChildren().remove(card);
-
         }
 
         for (Card card : discardPile.getCards()) {
@@ -311,10 +312,6 @@ public class Game extends Pane {
                 getChildren().remove(card);
             }
         }
-//        stockPile = new Pile(Pile.PileType.DISCARD, "Discard", STOCK_GAP);
-//        stockPile.setBlurredBackground();
-//        stockPile.setLayoutX(95);
-//        stockPile.setLayoutY(20);
 
         stockPile.clear();
         discardPile.clear();
