@@ -159,20 +159,24 @@ public class Game extends Pane {
     public boolean isMoveValid(Card card, Pile destPile) {
         //TODO
         if (destPile.getPileType().equals(Pile.PileType.TABLEAU)) {
-            if (destPile.isEmpty() && (card.getRank() == 13)) {
-                return true;
-            } else if (destPile.isEmpty()) {
-                return false;
-            } else if (destPile.getTopCard().isOppositeColor(card, destPile.getTopCard()))
-                return true;
-            } else {
+            if (destPile.isEmpty() && (card.getRank() == 13))
+            {
                 return true;
             }
+            else
+            {
+                if (Card.isOppositeColor(card, destPile.getTopCard()) && (card.getRank() == destPile.getTopCard().getRank() - 1))
+                {
+                    return true;
+                }
+                return false;
+            }}
 
-        if (destPile.getPileType().equals(Pile.PileType.FOUNDATION)) {
+        else if (destPile.getPileType().equals(Pile.PileType.FOUNDATION)) {
             return true;
-        }
-        return true;
+        }else {
+                return true;
+            }
     }
 
 
