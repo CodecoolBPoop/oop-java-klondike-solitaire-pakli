@@ -97,7 +97,7 @@ public class Game extends Pane {
             handleValidMove(card, pile);
         } else {
             draggedCards.forEach(MouseUtil::slideBack);
-            draggedCards.clear();  //not null!!
+            draggedCards.clear();
         }
         };
 
@@ -117,15 +117,12 @@ public class Game extends Pane {
 
     public Game() {
         deck = Card.createNewDeck();
-        // Collections.shuffle(deck);
+
         initPiles();
         dealCards();
 
         getChildren().add(restartBtn);
         addButtonsEventHandlers();
-
-        // System.out.println(stockPile.getCards());
-        // System.out.println(Card.isOppositeColor(stockPile.getCards().get(1), stockPile.getCards().get(30)));
     }
 
     public void addMouseEventHandlers(Card card) {
@@ -140,13 +137,11 @@ public class Game extends Pane {
     }
 
     public void refillStockFromDiscard() {
-        //kedd este
         if (stockPile.isEmpty()) {
             for (Card card : discardPile.getCards()) {
                 card.flip();
                 stockPile.addCard(card);
             }
-            // discardPile = null;
             discardPile = new Pile(Pile.PileType.DISCARD, "Discard", STOCK_GAP);
             discardPile.setBlurredBackground();
             discardPile.setLayoutX(285);
@@ -284,7 +279,6 @@ public class Game extends Pane {
 
         for (Card card : stockPile.getCards()) {
             getChildren().remove(card);
-
         }
 
         for (Card card : discardPile.getCards()) {
@@ -302,10 +296,6 @@ public class Game extends Pane {
                 getChildren().remove(card);
             }
         }
-//        stockPile = new Pile(Pile.PileType.DISCARD, "Discard", STOCK_GAP);
-//        stockPile.setBlurredBackground();
-//        stockPile.setLayoutX(95);
-//        stockPile.setLayoutY(20);
 
         stockPile.clear();
         discardPile.clear();
