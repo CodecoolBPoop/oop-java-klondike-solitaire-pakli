@@ -40,6 +40,18 @@ public class Game extends Pane {
 
 
     private EventHandler<MouseEvent> onMouseClickedHandler = e -> {
+        if (e.getClickCount() == 2 && !e.isConsumed()) {
+            e.consume();
+            Card card = (Card) e.getSource();
+
+            if (card == card.getContainingPile().getTopCard()
+                    && Pile.getPileThatCardFits(card, foundationPiles) != null){
+                card.moveToPile(Pile.getPileThatCardFits(card, foundationPiles));
+                System.out.println(card);
+                System.out.println(Pile.getPileThatCardFits(card, foundationPiles));
+                }
+            }
+
         Card card = (Card) e.getSource();
         if (card.getContainingPile().getPileType() == Pile.PileType.STOCK) {
             card.moveToPile(discardPile);
