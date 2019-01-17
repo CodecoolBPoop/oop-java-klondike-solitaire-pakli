@@ -85,7 +85,7 @@ public class Game extends Pane {
         Pile activePile = card.getContainingPile();
         if (activePile.getPileType() == Pile.PileType.STOCK)
             return;
-        if (card != activePile.getTopCard()) {
+        if (card.isFaceDown()) {
             return;
         }
         double offsetX = e.getSceneX() - dragStartX;
@@ -120,9 +120,7 @@ public class Game extends Pane {
             draggedCards.clear();
         }
         ValidPiles.clear();
-        if (isGameWon()){
-            System.out.println("You WON");
-        }
+
         };
 
 
@@ -174,13 +172,13 @@ public class Game extends Pane {
 
 
     public boolean isMoveValid(Card card, Pile destPile) {
-        //TODO
         if (destPile.getPileType().equals(Pile.PileType.TABLEAU)) {
             if (destPile.isEmpty() && (card.getRank() == 13)) {
                 return true;
             }
             else {
-                if (Card.isOppositeColor(card, destPile.getTopCard()) && (card.getRank() == destPile.getTopCard().getRank() - 1)) {
+                if (destPile.getTopCard() != null && Card.isOppositeColor(card, destPile.getTopCard())
+                        && (card.getRank() == destPile.getTopCard().getRank() - 1)) {
                     return true;
                 }
                 return false;

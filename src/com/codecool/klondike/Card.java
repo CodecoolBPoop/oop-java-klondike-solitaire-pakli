@@ -86,7 +86,10 @@ public class Card extends ImageView {
     }
 
     public static boolean isSameSuit(Card card1, Card card2) {
-        return card1.getSuit() == card2.getSuit();
+        if (card1 != null && card2 != null){
+            return card1.getSuit() == card2.getSuit();
+        }
+        return false;
     }
 
     public static List<Card> createNewDeck() {
