@@ -275,7 +275,6 @@ public class Game extends Pane {
 
         for (Card card : stockPile.getCards()) {
             getChildren().remove(card);
-
         }
 
         for (Card card : discardPile.getCards()) {
@@ -293,7 +292,6 @@ public class Game extends Pane {
                 getChildren().remove(card);
             }
         }
-
 
         stockPile.clear();
         discardPile.clear();
