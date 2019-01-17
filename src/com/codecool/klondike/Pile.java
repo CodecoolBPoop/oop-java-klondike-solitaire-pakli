@@ -8,6 +8,7 @@ import javafx.scene.layout.BackgroundFill;
 import javafx.scene.layout.Pane;
 import javafx.scene.paint.Color;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.ListIterator;
 
@@ -71,6 +72,19 @@ public class Pile extends Pane {
             return null;
         else
             return cards.get(cards.size() - 1);
+    }
+
+    public static Pile getPileThatCardFits(Card card, List<Pile> piles) {
+        Pile pileThatFits = null;
+        for (Pile pile : piles) {
+            if (pile.getTopCard() != null && card.getSuit() == pile.getTopCard().getSuit()
+                    && card.getRank() - 1 == pile.getTopCard().getRank()) {
+                pileThatFits = pile;
+            } else if (card.getRank() == 1 && pile.isEmpty()) {
+                pileThatFits = pile;
+            }
+        }
+        return pileThatFits;
     }
 
     public void setBlurredBackground() {
