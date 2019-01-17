@@ -74,17 +74,16 @@ public class Pile extends Pane {
             return cards.get(cards.size() - 1);
     }
 
-    public static Pile getPileThatCardFits(Card card, List<Pile> piles){
+    public static Pile getPileThatCardFits(Card card, List<Pile> piles) {
         Pile pileThatFits = null;
         for (Pile pile : piles) {
-            if (card.getSuit() == pile.getTopCard().getSuit()
-                    && card.getRank()-1 == pile.getTopCard().getRank()) {
+            if (pile.getTopCard() != null && card.getSuit() == pile.getTopCard().getSuit()
+                    && card.getRank() - 1 == pile.getTopCard().getRank()) {
+                pileThatFits = pile;
+            } else if (card.getRank() == 1 && pile.isEmpty()) {
                 pileThatFits = pile;
             }
-            else if (card.getRank() == 1 && pile.isEmpty()){
-                pileThatFits = pile;
-            }
-            }
+        }
         return pileThatFits;
     }
 

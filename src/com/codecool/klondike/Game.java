@@ -43,12 +43,13 @@ public class Game extends Pane {
         if (e.getClickCount() == 2 && !e.isConsumed()) {
             e.consume();
             Card card = (Card) e.getSource();
+            System.out.println("hello");
+            Pile validPile = Pile.getPileThatCardFits(card, foundationPiles);
 
             if (card == card.getContainingPile().getTopCard()
-                    && Pile.getPileThatCardFits(card, foundationPiles) != null){
-                card.moveToPile(Pile.getPileThatCardFits(card, foundationPiles));
-                System.out.println(card);
-                System.out.println(Pile.getPileThatCardFits(card, foundationPiles));
+                    && validPile!= null){
+                card.moveToPile(validPile);
+                handleValidMove(card, validPile);
                 }
             }
 
